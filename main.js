@@ -62,7 +62,7 @@ void main() {
   int i = 0;
   bool hitBreak = false;
   int iter = 0;
-  for (iter = 0; iter < HARD_MAX_ITER; iter++) {
+  for (; iter < HARD_MAX_ITER; iter++) {
     if (iter >= maxIterInt) {
       i = iter;
       hitBreak = true;
