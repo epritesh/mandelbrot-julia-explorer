@@ -60,16 +60,26 @@ void main() {
   float maxIter = float(maxIterInt);
 
   int i = 0;
-  while (i < HARD_MAX_ITER) {
-    if (i >= maxIterInt) break;
+  bool hitBreak = false;
+  for (int iter = 0; iter < HARD_MAX_ITER; ++iter) {
+    i = iter;
+    if (iter >= maxIterInt) {
+      hitBreak = true;
+      break;
+    }
     // z = z^2 + c
     vec2 z2 = vec2(
       z.x * z.x - z.y * z.y,
       2.0 * z.x * z.y
     );
     z = z2 + c;
-    if (dot(z, z) > 16.0) break; // escape radius^2
-    i++;
+    if (dot(z, z) > 16.0) {
+      hitBreak = true;
+      break; // escape radius^2
+    }
+  }
+  if (!hitBreak) {
+    i = maxIterInt;
   }
 
   float t = float(i) / maxIter;
