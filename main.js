@@ -61,9 +61,10 @@ void main() {
 
   int i = 0;
   bool hitBreak = false;
-  for (int iter = 0; iter < HARD_MAX_ITER; ++iter) {
-    i = iter;
+  int iter = 0;
+  for (iter = 0; iter < HARD_MAX_ITER; iter++) {
     if (iter >= maxIterInt) {
+      i = iter;
       hitBreak = true;
       break;
     }
@@ -74,6 +75,7 @@ void main() {
     );
     z = z2 + c;
     if (dot(z, z) > 16.0) {
+      i = iter;
       hitBreak = true;
       break; // escape radius^2
     }
