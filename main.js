@@ -48,9 +48,20 @@ void main() {
     c = u_c;
   }
 
-  float maxIter = float(u_iterations);
-  float i;
-  for (i = 0.0; i < maxIter; i++) {
+  const int HARD_MAX_ITER = 2000;
+  int maxIterInt = u_iterations;
+  if (maxIterInt < 1) {
+    maxIterInt = 1;
+  }
+  if (maxIterInt > HARD_MAX_ITER) {
+    maxIterInt = HARD_MAX_ITER;
+  }
+
+  float maxIter = float(maxIterInt);
+
+  int i = 0;
+  while (i < HARD_MAX_ITER) {
+    if (i >= maxIterInt) break;
     // z = z^2 + c
     vec2 z2 = vec2(
       z.x * z.x - z.y * z.y,
@@ -58,16 +69,17 @@ void main() {
     );
     z = z2 + c;
     if (dot(z, z) > 16.0) break; // escape radius^2
+    i++;
   }
 
-  float t = i / maxIter;
+  float t = float(i) / maxIter;
 
   // Smooth coloring for points that escaped
-  if (i < maxIter) {
+  if (i < maxIterInt) {
     float mag2 = dot(z, z);
     float log_zn = 0.5 * log(mag2);
     float nu = log(log_zn / log(2.0)) / log(2.0);
-    t = (i + 1.0 - nu) / maxIter;
+    t = (float(i) + 1.0 - nu) / maxIter;
   }
 
   // Slight palette animation over time
@@ -76,7 +88,7 @@ void main() {
   vec3 color = palette(t);
 
   // Inside the set: solid dark color
-  if (i >= maxIter) {
+  if (i >= maxIterInt) {
     color = vec3(0.0);
   }
 

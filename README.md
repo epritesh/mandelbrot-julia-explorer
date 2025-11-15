@@ -25,6 +25,24 @@ An interactive, GPU-accelerated fractal explorer that runs entirely in the brows
 Simply open `index.html` in a modern browser that supports WebGL.
 For best results, serve via a local HTTP server (e.g. `npx serve` or VS Code Live Server).
 
+### Quick run commands (PowerShell)
+
+```pwsh
+# Option 1: Node (no install needed with npx)
+npx http-server -p 8080 .
+
+# Option 2: Python 3 built-in server
+python -m http.server 8080
+```
+
+Then open:
+
+```text
+http://localhost:8080/
+```
+
+Note: The fragment shader uses an integer loop with a hard cap for wide WebGL driver compatibility.
+
 ## Deploying to GitHub Pages
 
 1. Create a new repository on GitHub (e.g. `mandelbrot-julia-explorer`).
