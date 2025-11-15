@@ -1,5 +1,10 @@
 (function() {
   const canvas = document.getElementById('fractalCanvas');
+  const buildInfoText = 'Last update: 2024-06-05 15:45 UTC';
+  const buildInfoEl = document.getElementById('buildInfo');
+  if (buildInfoEl) {
+    buildInfoEl.textContent = buildInfoText;
+  }
   const gl = canvas.getContext('webgl');
   if (!gl) {
     alert('WebGL not supported in this browser.');
@@ -61,10 +66,9 @@ void main() {
 
   int i = 0;
   bool hitBreak = false;
-  int iter = 0;
-  for (; iter < HARD_MAX_ITER; iter++) {
+  for (int iter = 0; iter < HARD_MAX_ITER; ++iter) {
+    i = iter;
     if (iter >= maxIterInt) {
-      i = iter;
       hitBreak = true;
       break;
     }
@@ -75,7 +79,6 @@ void main() {
     );
     z = z2 + c;
     if (dot(z, z) > 16.0) {
-      i = iter;
       hitBreak = true;
       break; // escape radius^2
     }
